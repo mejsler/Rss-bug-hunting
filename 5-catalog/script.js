@@ -17,17 +17,18 @@ const grid = document.getElementById("grid");
 const countEl = document.getElementById("count");
 
 function getFiltered() {
-  
+
   let result = [...products];
   const search = searchInput.value;
   const category = categorySelect.value;
   const sort = sortSelect.value;
 
   if (search) {
-    result = result.filter((p) => p.name.includes(search));
+    const query = search.toLowerCase().trim();
+    result = result.filter((p) => p.name.toLowerCase().includes(query));
   }
 
-  if (category === "all") {
+  if (category && category !== "all") {
     result = result.filter((p) => p.category === category);
   }
 
@@ -57,8 +58,8 @@ sortSelect.addEventListener("change", render);
 
 resetBtn.addEventListener("click", () => {
   searchInput.value = "";
-  categorySelect.value = "all";
-  sortSelect.value = "default";
+  categorySelect.selectedIndex = 0;
+  sortSelect.selectedIndex = 0;
   render();
 });
 
