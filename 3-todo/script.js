@@ -34,21 +34,28 @@ function toggleTask(id) {
 }
 
 function deleteTask(id) {
-  tasks.filter((t) => t.id !== id);
+  tasks = tasks.filter((t) => t.id !== id);
   render();
 }
 
 function clearCompleted() {
-  tasks = [];
+  tasks = tasks.filter((t) => !t.done);
   render();
 }
 
 function getVisibleTasks() {
-  return tasks;
+  if (currentFilter === "active") {
+    return tasks.filter((t) => !t.done);
+  }
+  if (currentFilter === "completed") {
+    return tasks.filter((t) => t.done);
+  }
+  return tasks; 
 }
 
 function updateCounter() {
-  counter.textContent = "Активных задач: " + tasks.length;
+  const activeCount = tasks.filter((t) => !t.done).length;
+  counter.textContent = "Активных задач: " + activeCount;
 }
 
 function render() {
